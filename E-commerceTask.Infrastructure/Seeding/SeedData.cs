@@ -18,8 +18,8 @@ namespace E_commerceTask.Infrastructure.Seeding
 
             // Seed Customers
             modelBuilder.Entity<Customer>().HasData(
-                new Customer { id = 1, name = "John Doe", email = "john@example.com", phone = "1234567890" },
-                new Customer { id = 2, name = "Jane Smith", email = "jane@example.com", phone = "0987654321" }
+                new Customer { id = 1, name = "Mahmoud Ibrahim", email = "mahmoud@example.com", phone = "1234567890" },
+                new Customer { id = 2, name = "Ahmed Ibrahim", email = "Ahmed@example.com", phone = "0987654321" }
             );
 
             // Seed Orders

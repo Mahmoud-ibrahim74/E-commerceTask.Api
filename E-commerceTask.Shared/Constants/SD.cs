@@ -32,8 +32,20 @@ public static class SD
     }
     public static class ApiRoutes
     {
-
-
+        public static class Orders
+        {
+            public const string GetAll = "orders";
+            public const string GetById = "orders/{id}";
+            public const string Create = "orders/create";
+            public const string UpdateStatus = "orders/update/{id}";
+        }
+        public static class Customers
+        {
+            public const string GetAll = "customers";
+            public const string GetById = "customers/{id}";
+            public const string Create = "customers/create";
+            public const string Update = "customers/update/{id}";
+        }
     }
  
 

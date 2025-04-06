@@ -28,6 +28,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\E-commerceTask.Application\E-commerceTask.Application.csproj" />
 	  <ProjectReference Include="..\E-commerceTask.Infrastructure\E-commerceTask.Infrastructure.csproj" />
 	  <ProjectReference Include="..\E-commerceTask.Shared\E-commerceTask.Shared.csproj" />
 	</ItemGroup>

@@ -1,8 +1,15 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using E_commerceTask.Application.DTOs.Requests.Customers;
+using E_commerceTask.Application.DTOs.Requests.Validations.Orders;
 using E_commerceTask.Application.Interfaces;
+using E_commerceTask.Application.Interfaces.IServices;
+using E_commerceTask.Application.Services.Customers;
+using E_commerceTask.Application.Services.Orders;
 using E_commerceTask.Infrastructure.Data;
 using E_commerceTask.Infrastructure.Repositories;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using static E_commerceTask.Shared.Constants.SD;
@@ -23,8 +30,9 @@ builder.Services.AddControllersWithViews().AddJsonOptions(x =>
     );
 
 
-
-
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateOrderDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateCustomerDTO>();
 #region DbContextServices
 
 builder.Services.AddDbContext<ECommerceTaskContext>(options =>
@@ -49,6 +57,8 @@ builder.Services.AddSwaggerGen(x =>
 #region DI
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 #endregion
 
 
@@ -60,13 +70,6 @@ var httpsCertificatePassword = builder.Configuration.GetValue<string>("KestrelSe
 builder.WebHost.UseIIS();
 builder.WebHost.UseIISIntegration();
 var app = builder.Build();
-
-#region To take an instance from specific repository
-
-var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
-using var scope = scopedFactory!.CreateScope();
-
-#endregion
 
 
 
@@ -85,7 +88,6 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 }
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 
 app.UseCors(b => b.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
