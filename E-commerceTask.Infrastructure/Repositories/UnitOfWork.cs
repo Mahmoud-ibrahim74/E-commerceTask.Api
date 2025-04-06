@@ -1,21 +1,24 @@
 using E_commerceTask.Application.Interfaces;
+using E_commerceTask.Application.Interfaces.Customers;
+using E_commerceTask.Application.Interfaces.Orders;
 using E_commerceTask.Infrastructure.Data;
+using E_commerceTask.Infrastructure.Repositories.Orders;
 using Microsoft.Extensions.Configuration;
 
 namespace E_commerceTask.Infrastructure.Repositories;
 
-public class UnitOfWork : IUnitOfWork
+public class UnitOfWork(ECommerceTaskContext context, IConfiguration config) : IUnitOfWork
 {
-    private readonly ECommerceTaskContext _context;
-    protected readonly IConfiguration _config;
+    private readonly ECommerceTaskContext _context = context;
+    protected readonly IConfiguration _config = config;
 
+    public IOrderRepository Order { get; private set; } = new OrderRepository(context);
 
+    public IProductRepository Product { get; private set; } = new ProductRepository(context);
 
-    public UnitOfWork(ECommerceTaskContext context, IConfiguration config)
-    {
-        _context = context;
-        _config = config;
-    }
+    public ICustomerRepository Customer { get; private set; } = new CustomerRepository(context);
+
+    public IOrderProductRepository OrderProduct { get; private set; } = new OrderProductRepository(context);
 
     public async Task<int> CompleteAsync() => await _context.SaveChangesAsync();
     public async Task BeginTransactionAsync() => await _context.Database.BeginTransactionAsync();

@@ -1,16 +1,9 @@
-using System.Globalization;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using E_commerceTask.Application.Interfaces;
 using E_commerceTask.Infrastructure.Data;
 using E_commerceTask.Infrastructure.Repositories;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using static E_commerceTask.Shared.Constants.SD;
 
@@ -55,7 +48,7 @@ builder.Services.AddSwaggerGen(x =>
 
 #region DI
 builder.Services.AddHttpContextAccessor();
-
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 #endregion
 
 
