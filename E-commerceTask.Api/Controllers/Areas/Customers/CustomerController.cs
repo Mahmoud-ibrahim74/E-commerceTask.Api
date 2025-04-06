@@ -3,7 +3,7 @@ using E_commerceTask.Application.Interfaces.IServices;
 using Microsoft.AspNetCore.Mvc;
 using static E_commerceTask.Shared.Constants.SD;
 
-namespace E_commerceTask.Api.Controllers.Areas.Orders
+namespace E_commerceTask.Api.Controllers.Areas.Customers
 {
 
     [Area(Modules.AdminPanel)]
